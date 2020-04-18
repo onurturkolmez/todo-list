@@ -1,0 +1,22 @@
+.App-header {
+  background-color: orange;
+  min-height: 100vh;
+  display: flex;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  overflow-x: scroll;
+  width: calc(100vw + 1rem);
+}
+
+.App-header::after {
+  content: "";
+}
+
+.message-box-wrapper {
+  position: fixed;
+  width: 160px;
+  right: 5px;
+  top: 75px;
+  font-size: 14px;
+  color: white;
+}

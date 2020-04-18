@@ -1,0 +1,147 @@
+.tdl-container {
+  min-width: 272px;
+  position: relative;
+  margin: 1rem 0.5rem;
+}
+
+.tdl-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+  display: inline-block;
+  white-space: nowrap;
+  border: 1px solid white;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  background-color: #282c34;
+  border-color: #282c34;
+}
+
+.tdl-header {
+  display: flex;
+  margin: 0;
+  margin-top: -0.75rem;
+  flex: 4;
+  justify-content: center;
+}
+
+.tdl-wrapper > footer {
+  margin-top: 1rem;
+}
+
+.tdl-wrapper > footer > h1 {
+  font-size: 1rem;
+}
+
+.tdl-header > h1 {
+  word-break: break-all;
+  display: block;
+  white-space: normal;
+  font-size: 1rem;
+  flex: 3;
+}
+
+.mod-add > .open-add,
+.is-idle > .add-controls {
+  display: none;
+}
+
+.is-idle > .open-add {
+  display: flex;
+}
+
+.add-controls {
+  display: flex;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.textBox {
+  width: 100%;
+  height: 36px;
+  margin-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid white;
+  font-size: 14px;
+}
+
+.btn {
+  padding: 0.25rem;
+  color: white;
+  background-color: #3e51b5;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 800;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.bg-green {
+  background-color: green;
+  border-color: green;
+}
+
+.dropdown {
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+.dropdown li {
+  display: block;
+  float: left;
+  padding: 0.25rem;
+  position: relative;
+  text-decoration: none;
+  transition-duration: 0.5s;
+}
+
+li a {
+  color: #fff;
+}
+
+.open-add,
+li:hover {
+  cursor: pointer;
+}
+
+.dropdown li ul {
+  z-index: 999;
+  background: white;
+  border: 1px solid #ccc;
+  visibility: hidden;
+  opacity: 0;
+  min-width: 9rem;
+  padding: 0.5rem;
+  position: absolute;
+  transition: all 0.5s ease;
+  margin-top: 0.25rem;
+  left: -99px;
+  display: none;
+}
+
+.dropdown li:hover > ul,
+.dropdown li ul:hover {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}
+
+.dropdown li ul li {
+  clear: both;
+  width: 100%;
+}
+
+.ml-2 {
+  margin-left: 1rem;
+}
