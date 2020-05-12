@@ -9,6 +9,7 @@ type DispatchProps = {
 type StateProps = {
   auth: any
 }
+
 type Props = RouteComponentProps & StateProps & DispatchProps;
 
 function Login(props: Props) {

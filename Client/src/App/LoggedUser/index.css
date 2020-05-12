@@ -1,11 +1,11 @@
 .App-header {
   background-color: orange;
-  min-height: 100vh;
+  height: calc(100vh - 60px);
   display: flex;
   font-size: calc(10px + 2vmin);
   color: white;
-  overflow-x: scroll;
-  width: calc(100vw + 1rem);
+  overflow-x: auto;
+  width: 100%;
 }
 
 .App-header::after {

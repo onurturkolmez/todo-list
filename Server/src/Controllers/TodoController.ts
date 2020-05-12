@@ -3,37 +3,20 @@ import { ResponseCodes } from "../Helpers/Constant";
 import { PostgreSQL } from '../Init/PostgreSQL';
 import { ITodoController } from '../Interfaces/Controllers/TodoController';
 
-const getTodos = async () => {
-  return new Promise((resolve, reject) => {
-    PostgreSQL.execute(`SELECT 
-    t.id,
-    t.name,
-    t."isActive",
-    ti.items
-    FROM todo t
-    FULL OUTER JOIN 
-    (SELECT t2.id todoId, array_agg('{' || 'id:' || ti2.id || ', name:' || ti2.name || ', description:' || ti2.description || '}' ) items 
-    from "todo" t2 
-    inner join "todoItems" ti2 
-    on t2.id = ti2.todo 
-    group by t2.id) ti 
-    on t.id = ti.todoId
-    where t."isActive" = true;`)
-      .then(todo => {
-        resolve(todo)
-      })
-      .catch(err => {
-        reject(err)
-      })
-  })
-}
-
 export class TodoController implements ITodoController {
 
   public listTodo(req: Request, res: Response) {
 
-    getTodos()
+    PostgreSQL.execute(`
+      SELECT 
+      name,
+      id,
+      "isActive"
+      FROM todo
+      where "isActive" = true
+    `)
       .then(todo => {
+
         return res.status(ResponseCodes.OK).send({
           success: true,
           list: todo
@@ -47,11 +30,31 @@ export class TodoController implements ITodoController {
       })
   }
 
+  public listTodoItems(req: Request, res: Response) {
+
+    const { id } = req.params;
+
+    PostgreSQL.execute(`SELECT * from "todoItem" where todo_id='${id}' and "isActive" = true`)
+      .then(todoItems => {
+
+        return res.status(ResponseCodes.OK).send({
+          success: true,
+          list: todoItems
+        });
+      })
+      .catch(err => {
+        return res.status(ResponseCodes.OK).send({
+          success: false,
+          msg: err
+        });
+      });
+  }
+
   public deleteTodo(req: Request, res: Response) {
 
     const { id } = req.params;
 
-    PostgreSQL.execute(`UPDATE todo SET "isActive"=false where id='${id}';`)
+    PostgreSQL.execute(`UPDATE todo SET "isActive" = false where id='${id}';`)
       .then(() => {
         return res.status(ResponseCodes.OK).send({
           success: true
@@ -69,7 +72,7 @@ export class TodoController implements ITodoController {
 
     const { id } = req.params;
 
-    PostgreSQL.execute(`UPDATE todo SET "isActive"=true where id='${id}';`)
+    PostgreSQL.execute(`UPDATE todo SET "isActive" = true where id='${id}';`)
       .then(result => {
         console.log("result", result)
         return res.status(ResponseCodes.OK).send({
@@ -89,6 +92,83 @@ export class TodoController implements ITodoController {
     const { name } = req.body;
 
     PostgreSQL.execute(`INSERT INTO todo(name, "isActive") VALUES ('${name}', true);`)
+      .then(() => {
+        return res.status(ResponseCodes.OK).send({
+          success: true
+        });
+      })
+      .catch(err => {
+        return res.status(ResponseCodes.OK).send({
+          success: false,
+          msg: err
+        });
+      });
+  }
+
+  public addTodoItem(req: Request, res: Response) {
+
+    const { name, id } = req.body;
+    console.log("object", req.body)
+
+    PostgreSQL.execute(`INSERT INTO "todoItem"(name, todo_id, "isActive") VALUES ('${name}', '${id}', true);`)
+      .then(() => {
+        return res.status(ResponseCodes.OK).send({
+          success: true
+        });
+      })
+      .catch(err => {
+        return res.status(ResponseCodes.OK).send({
+          success: false,
+          msg: err
+        });
+      });
+  }
+
+  public deleteTodoItem(req: Request, res: Response) {
+
+    const { id } = req.params;
+
+    PostgreSQL.execute(`UPDATE "todoItem" SET "isActive" = false where id='${id}';`)
+      .then(() => {
+        return res.status(ResponseCodes.OK).send({
+          success: true
+        });
+      })
+      .catch(err => {
+        return res.status(ResponseCodes.OK).send({
+          success: false,
+          msg: err
+        });
+      });
+  }
+
+  public updateTodo(req: Request, res: Response) {
+
+    const { name, id } = req.body;
+
+    PostgreSQL.execute(`UPDATE todo SET "name" = '${name}' where id='${id}';`)
+      .then(() => {
+        return res.status(ResponseCodes.OK).send({
+          success: true
+        });
+      })
+      .catch(err => {
+        return res.status(ResponseCodes.OK).send({
+          success: false,
+          msg: err
+        });
+      });
+  }
+
+  public updateTodoItem(req: Request, res: Response) {
+
+    const { name, description, deadline, id } = req.body;
+
+    PostgreSQL.execute(`
+    UPDATE todo 
+    SET "name" = '${name}', "description" = '${description}', "deadline" = '${deadline}'
+    where id='${id}';
+    `)
       .then(() => {
         return res.status(ResponseCodes.OK).send({
           success: true

@@ -1,6 +1,5 @@
 import { Sequelize } from 'sequelize-typescript';
 import { Client } from 'pg';
-import { Todo } from '../Models/Todo';
 
 export class PostgreSQL {
 

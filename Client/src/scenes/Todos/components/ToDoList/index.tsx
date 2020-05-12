@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './index.css';
-import { Props } from './types';
+import { Props, connector } from './types';
 import TodoItem from '../TodoItem';
-import Icon from '../../../../components/Icon';
+import { TrashIcon, PenIcon, CancelIcon, OkIcon } from '../../../../components/Icons';
 
-const ToDoList = ({
-  todo,
-  deleteTodo
-}: Props) => {
+function ToDoList(props: Props) {
+
+  const [isEdit, toggleEdit] = useState(false);
+  const [updatedName, onNameUpdate] = useState(props.todo.name);
+
+  const { todo, deleteTodo } = props;
+
+  const updateTodo = () => {
+    props.updateTodo(updatedName, todo.id);
+  }
 
   return (
     <div className="tdl-container">
@@ -16,14 +22,55 @@ const ToDoList = ({
 
         <div
           className="tdl-header">
-          <h1>{todo.name}</h1>
-          <span
+
+          {
+            isEdit
+              ?
+              <input
+                className="editable-input focusable"
+                autoFocus
+                value={updatedName}
+                onChange={(e: any) => { onNameUpdate(e.target.value) }}
+                onKeyPress={e => {
+                  if (e.key == 'Enter') updateTodo();
+                }}
+              />
+              :
+              <h1>{todo.name}</h1>
+          }
+
+          {
+            !isEdit
+            &&
+            <span
+              className="centered-flex">
+              <a href="#" onClick={() => toggleEdit(!isEdit)}>
+                <PenIcon />
+              </a>
+              <a href="#" onClick={deleteTodo}>
+                <TrashIcon />
+              </a>
+            </span>
+          }
+
+          {
+            isEdit
+            &&
+            <span
+              className="centered-flex">
+              <a href="#" onClick={() => toggleEdit(!isEdit)}>
+                <CancelIcon />
+              </a>
+              <a href="#" onClick={() => { updateTodo() }}>
+                <OkIcon />
+              </a>
+            </span>
+          }
+
+          {/* <span
             className="dropdown">
             <li>
               <div>
-                <Icon
-                  type={`more_2`}
-                />
               </div>
               <span>...</span>
               <ul>
@@ -34,29 +81,14 @@ const ToDoList = ({
                 </li>
               </ul>
             </li>
-          </span>
+          </span> */}
         </div>
 
-        {/* {
-          todo.items.map((item: any, index: number) => {
-            return (
-              <TodoItem
-                key={index}
-                item={JSON.parse(item)}
-              />
-            );
-          })
-        } */}
-
-        <footer>
-          <h1
-            className="open-add">
-            {`+ Add${todo && todo.items ? ' Another ' : ' '}Todo Item`}
-          </h1>
-        </footer>
+        <TodoItem
+          todoId={todo.id} />
       </div>
     </div>
   )
 }
 
-export default ToDoList;
+export default connector(ToDoList);

@@ -20,4 +20,8 @@ export const connector = connect(mapStateToProps, mapDispatchToProps);
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 
+type todoItem = {
+  item: any
+}
+
 export type Props = RouteComponentProps & PropsFromRedux

@@ -5,7 +5,7 @@ import { ITodo } from 'Interfaces/Models/Todo';
 export class Todo extends Model<ITodo> {
 
   @PrimaryKey
-  @Column id!: number;
+  @Column id: string;
   @Column name: string;
-  @Column isactive: boolean;
+  @Column isActive: boolean;
 }

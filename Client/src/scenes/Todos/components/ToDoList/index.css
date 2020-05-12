@@ -1,7 +1,13 @@
 .tdl-container {
   min-width: 272px;
+  max-width: 272px;
+  width: 100vw;
   position: relative;
   margin: 1rem 0.5rem;
+}
+
+.tdl-container:first-child {
+  margin-left: 1rem;
 }
 
 .tdl-wrapper {
@@ -36,33 +42,23 @@
   word-break: break-all;
   display: block;
   white-space: normal;
-  font-size: 1rem;
+  font-size: 1.5rem;
   flex: 3;
 }
 
 .mod-add > .open-add,
+.mod-add > .open-item-add,
 .is-idle > .add-controls {
   display: none;
 }
 
+.is-idle > .open-item-add,
 .is-idle > .open-add {
   display: flex;
 }
 
 .add-controls {
   display: flex;
-}
-
-.d-flex {
-  display: flex;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
-.w-100 {
-  width: 100%;
 }
 
 .textBox {
@@ -76,19 +72,28 @@
 }
 
 .btn {
-  padding: 0.25rem;
+  padding: 0.25rem 0.5rem;
   color: white;
   background-color: #3e51b5;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 800;
   border-radius: 5px;
-  width: 100%;
+  border: 1px solid;
+}
+
+.btn:active {
+  transform: translateY(4px);
 }
 
 .bg-green {
   background-color: green;
   border-color: green;
+}
+
+.bg-gray {
+  background-color: gray;
+  border-color: gray;
 }
 
 .dropdown {
@@ -110,6 +115,7 @@ li a {
   color: #fff;
 }
 
+.open-item-add,
 .open-add,
 li:hover {
   cursor: pointer;
@@ -117,8 +123,10 @@ li:hover {
 
 .dropdown li ul {
   z-index: 999;
-  background: white;
-  border: 1px solid #ccc;
+  background: #282c34;
+  border: 1px solid #282c34;
+  box-shadow: 0px 1px 3px 4px #ccc;
+  border-radius: 8px;
   visibility: hidden;
   opacity: 0;
   min-width: 9rem;
@@ -140,6 +148,10 @@ li:hover {
 .dropdown li ul li {
   clear: both;
   width: 100%;
+}
+
+.dropdown li ul li a:hover {
+  text-decoration: underline;
 }
 
 .ml-2 {

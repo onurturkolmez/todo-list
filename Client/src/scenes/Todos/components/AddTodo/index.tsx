@@ -1,21 +1,25 @@
 import React from 'react';
 import { Props } from './types';
+import './index.css';
+import { PlusIcon } from '../../../../components/Icons';
+
 const AddTodo = ({
   name,
   addClick,
   onChangeName
 }: Props) => {
   return (
-    <div className="tdl-container">
+    <div className="tdl-container add-todo-container">
       <div
         className="tdl-wrapper">
         <div
           className="add-wrapper mod-add is-idle">
-
           <span
             className="open-add">
-            + Add Todo List
-            </span>
+            <PlusIcon />
+            <span>Add Todo List</span>
+
+          </span>
           <div
             className="add-controls flex-wrap">
             <input
@@ -24,16 +28,18 @@ const AddTodo = ({
               value={name}
               onChange={(e: any) => { onChangeName(e) }}
               placeholder="Type Your List Name"
+              onKeyPress={e => {
+                if (e.key == 'Enter') addClick();
+              }}
             />
-            <button
-              onClick={addClick}
-              className="btn bg-green">
-              Add List
+            <div className="d-flex w-100 justify-space-between">
+              <button
+                onClick={addClick}
+                className="btn bg-green">
+                Add List
               </button>
-            <span
-              className="controls open-add ml-2">
-              x
-        </span>
+              {/* <Icon icon={close} /> */}
+            </div>
           </div>
         </div>
       </div>

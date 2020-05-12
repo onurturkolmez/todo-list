@@ -44,15 +44,12 @@ function Todos(props: Props) {
   })
 
   useEffect(() => {
-
     props.getTodos();
   }, [])
 
   const { loading, todos } = props.todo;
-  
-  if (loading) return (<Loader />);
 
-  console.log(todos[0].items);
+  if (loading) return (<Loader />);
 
   return (
     <>
@@ -63,7 +60,6 @@ function Todos(props: Props) {
             todo={todo}
             deleteTodo={() => {
               props.deleteTodo(todo.id);
-              props.getTodos();
             }}
           />
         ))
@@ -72,7 +68,6 @@ function Todos(props: Props) {
         name={todoName}
         addClick={() => {
           props.addTodo(Object.assign({}, { name: todoName }));
-          props.getTodos();
           updateTodoName('');
         }}
         onChangeName={(e: any) => {

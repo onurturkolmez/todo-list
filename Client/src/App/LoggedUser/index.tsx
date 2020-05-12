@@ -1,7 +1,7 @@
 import React from 'react';
 import { Props, connector } from './types';
 import './index.css';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Todos from '../../scenes/Todos';
 import TodoDetail from '../../scenes/TodoDetail';
 import Header from '../../components/Header';
@@ -16,21 +16,23 @@ function LoggedUser(props: Props) {
     <div className="App">
       <Header />
       <div className="App-header">
+        <Todos />
         <Switch>
           <Route
-            path="/"
+            path="/todos"
             exact
-            component={Todos}
+          // component={Todos}
           />
-          <Route
+          {/* <Route
             path={`/todos`}
             exact
             component={Todos}
-          />
+          /> */}
           <Route
             path={`/:id`}
-            children={<TodoDetail />}
+            component={TodoDetail}
           />
+          <Redirect to="/" />
         </Switch>
 
         <div

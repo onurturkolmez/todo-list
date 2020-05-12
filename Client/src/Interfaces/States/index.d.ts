@@ -33,5 +33,6 @@ export interface IUserState {
 
 export interface IInitialState {
   todo: ITodoState
+  todoItem: any
   auth: IUserState
 }
